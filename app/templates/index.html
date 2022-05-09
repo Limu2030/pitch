@@ -1,0 +1,19 @@
+{%extends 'base.html'%}
+{% block content %} 
+<div class="container-fluid">
+    <h3>Pitch</h3>
+    <ul >
+        <div style="display: flex;flex-wrap: wrap;gap: 2rem;">
+            {% for item in news %}
+            <div style="flex: 0 1 30rem">                              
+                <!-- <img style="height: 20rem;" src="{{item.urlToImage}}" alt=""> -->
+                <h2>{{item.title|truncate(25)}}</h2> 
+                <p class="p-3">{{item.description}}</p>                
+            </div>
+
+            {% endfor %}            
+        </div>
+
+    </ul>
+</div>
+{% endblock %}
