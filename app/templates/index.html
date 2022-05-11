@@ -16,8 +16,8 @@
         <div style="display: flex;flex-wrap: wrap;gap: 2rem;">
             {% for item in news %}
             <div style="flex: 0 1 30rem">                              
-                <img style="height: 20rem;" src="app/static/images/image1.jpg" alt="">
-                <form action=""></form>
+                <img style="height: 20rem;" src="/app/static/images/image1.jpg" alt="">
+                <form action="/submit" method="POST"></form>
                 <h2>{{item.title|truncate(25)}}</h2> 
                 <p class="p-3">{{item.description}}</p>                
             </div>
