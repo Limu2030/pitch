@@ -1,11 +1,13 @@
 
 import os
 
+from flask_sqlalchemy import SQLAlchemy
+
 
 
 class Config:
-    NEWS_API_BASE_URL = 'https://newsapi.org/v2/top-headlines?country=us&apiKey={}'
-    NEWS_API_KEY = os.environ.get('NEWS_API_KEY')
+    SQLALCHEMY_DATABASE_URI=os.getenv('DATABASE_URL')
+    DEBUG = os.getenv('DEBUG')
     
 
 

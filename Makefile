@@ -5,4 +5,4 @@ migrations:
 	flask db init
 
 migrate:
-	flask db migrate
+	mflask db migrate
