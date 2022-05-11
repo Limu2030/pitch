@@ -1,6 +1,6 @@
 
 
-class News:
+class User:
     def __init__(self, title, description, urlToImage, content, publishedAt):
         self.title = title
         self.description = description
