@@ -1,17 +1,11 @@
-# from flask_bootstrap import Bootstrap
-from ensurepip import bootstrap
-from flask import Flask
-from config import config_options
- 
+from app import  create_app 
+from flask_script import Manager, Server
 
-def create_app(config_name):
-    app = Flask(__name__)
 
-    app.config.from_object(config_options[config_name])
-    bootstrap.init_app(app)
-    
-    from .main import main as main_blueprint
-    app.register_blueprint(main_blueprint) 
-    from .requests import configure_request
-    configure_request(app)
-    return app
+app = create_app('development')
+
+manager = Manager(app)
+manager.add_command('server', Server)
+
+if __name__ =='__main__':
+    manager.run()
