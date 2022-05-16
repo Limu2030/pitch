@@ -1,0 +1,42 @@
+    {% extends 'base.html'%} {% block content%}
+
+    <div class="container-fluid">
+    <div class="col " style="color:#000">
+        <h2 class="text-center" style="color:white"> ALL PITCHES </h2>
+        <div class="row" >
+        {% for pitch in pitches %}
+            <div class="col-3 mx-4 mb-5">
+            <div class="card">
+                <div class="card-body">
+                <h5 class="card-title">Title:  {{pitch.title}}</h5>
+                <p class="card-header text" ><strong>Category:  </strong>{{pitch.category}}</p>
+                <p class="card-text row-10"><strong>Pitch:  </strong> {{pitch.content }}</p>
+                <p class="card-text row-10"><strong>Author:  </strong> </strong>{{pitch.user }}</p>
+
+                <form action="/comment/{{current_user.id}}/{{pitch.id}}" method="POST">
+                {{comment_form.csrf_token}}
+                <div class="form-outline">
+                {{comment_form.content(class="form-control")}}
+                {{comment_form.submit(class="btn btn-secondary")}}
+                
+                </div>
+                
+                </form>
+                {% for comment in pitch.comments%}
+                <p class="card-text row-10">{{comment.content}}</p>
+                {% endfor%}
+                </div>
+
+            </div>
+            </div>
+        {% endfor %} 
+        </div>
+        </div>
+
+    </div>
+
+        
+    {% endblock%}
+
+
+
