@@ -8,8 +8,8 @@ class Config:
     
 
 class ProdConfig(Config):
-    SQLALCHEMY_DATABASE_URI = 'postgresql://fmeutmnsdzdqww:567b5f96281c8fca3b55dd1e364e7df6953150b2eaccbfa3ea9157e4fe9bb793@ec2-54-86-224-85.compute-1.amazonaws.com:5432/d602ucgp8u0q7h'
-
+    SQLALCHEMY_DATABASE_URI = 'postgresql://ynzxcynqwkzwgu:d24546c110c7ca60e310f6bc1ae1d4cba7ea2b151cdb96dce4a6aa5b0cdd70f9@ec2-44-194-117-205.compute-1.amazonaws.com:5432/d45d0c3aat5480'
+                            
 
 
 class DevConfig(Config):
