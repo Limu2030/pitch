@@ -12,7 +12,16 @@ class User(UserMixin,db.Model):
     username = db.Column(db.String(20),unique=True,nullable=False)
     email = db.Column(db.String(120),unique=True,nullable=False)
     user_password = db.Column(db.String,unique=True,nullable=False)
-    pitches = db.relationship('Pitch',backref='pitches',lazy=True)
+    pitches = db.relationship('Pitch',backref='pitch',lazy='dynamic')
+    comments = db.relationship('Comments', backref='user', lazy='dynamic') 
+
+    def save_user(self):
+        db.session.add(self)
+        db.session.commit()
+    def delete_user(self):
+        db.session.delete(self)
+        db.session.commit()
+
 
     def verify_password(self, password):
         return check_password_hash(self.user_password, password)
@@ -24,7 +33,7 @@ class User(UserMixin,db.Model):
     @property
     def password(self):
         raise AttributeError('Error')
-    
+        
     @password.setter
     def password(self,password):
         self.user_password= generate_password_hash(password)
@@ -35,6 +44,7 @@ class User(UserMixin,db.Model):
         return f"{self.username}"
 
 class Category(db.Model):
+    __tablename__='category'
     id = db.Column(db.Integer,primary_key=True)
     name = db.Column(db.String(50),nullable=False)
 
@@ -47,20 +57,26 @@ class Pitch(db.Model):
     title = db.Column(db.String(100),nullable=False)
     date_posted = db.Column(db.DateTime,nullable=False,default=datetime.utcnow)
     content =db.Column(db.Text,nullable=False)
-    author = db.Column(db.Integer,db.ForeignKey('user.id'),nullable=False)
+    author = db.Column(db.Integer,db.ForeignKey('users.id'),nullable=False)
     category = db.Column(db.String,default='general')
-    comments = db.relationship('Comments',backref='comments')
-    
+    comments = db.relationship('Comments',backref='pitches', lazy='dynamic')
+    def save_pitch(self):
+        db.session.add(self)
+        db.session.commit()    
 
 
 class Votes(db.Model):
+    __tablename__='votes'
     id = db.Column(db.Integer,primary_key=True)
     down_votes = db.Column(db.Integer)
     up_votes = db.Column(db.Integer)
 
 class Comments(db.Model):
+    __tablename__='comments'
     id = db.Column(db.Integer,primary_key=True)
     content =db.Column(db.Text,nullable=False)
-    user_id = db.Column(db.Integer,db.ForeignKey('user.id'),nullable=False)
-    pitch_id = db.Column(db.Integer,db.ForeignKey('pitch.id'),nullable=False)
-
+    user_id = db.Column(db.Integer,db.ForeignKey('users.id'),nullable=False)
+    pitch_id = db.Column(db.Integer,db.ForeignKey('pitches.id'),nullable=False)
+    def save_comment(self):
+        db.session.add(self)
+        db.session.commit()

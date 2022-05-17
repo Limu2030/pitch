@@ -1,4 +1,5 @@
-SECRET_KEY='af94947856995cbbe93a23bbbad5f805'
+export SECRET_KEY='pitch12345'
+export SQLALCHEMY_DATABASE_URI='postgresql+psycopg2://lilly:1234@localhost/pitchhh'
 
 
-python3 manage.py
+python3 manage.py server
