@@ -9,10 +9,10 @@ from app import login_manager
 class User(UserMixin,db.Model):
     __tablename__='users'
     id = db.Column(db.Integer,primary_key=True)
-    username = db.Column(db.String(20),unique=True,nullable=False)
-    email = db.Column(db.String(120),unique=True,nullable=False)
-    user_password = db.Column(db.String,unique=True,nullable=False)
-    pitches = db.relationship('Pitch',backref='pitches',lazy='dynamic')
+    username = db.Column(db.String(20),unique=True)
+    email = db.Column(db.String(120),unique=True)
+    user_password = db.Column(db.String,unique=True)
+    pitches = db.relationship('Pitch',backref='user',lazy='dynamic')
     comments = db.relationship('Comments', backref='user', lazy='dynamic') 
 
     def save_user(self):
@@ -46,7 +46,7 @@ class User(UserMixin,db.Model):
 class Category(db.Model):
     __tablename__='category'
     id = db.Column(db.Integer,primary_key=True)
-    name = db.Column(db.String(50),nullable=False)
+    name = db.Column(db.String(50))
 
     def __repr__(self):
         return f"Category {self.name} " 
@@ -57,7 +57,7 @@ class Pitch(db.Model):
     title = db.Column(db.String(100),nullable=False)
     date_posted = db.Column(db.DateTime,nullable=False,default=datetime.utcnow)
     content =db.Column(db.Text,nullable=False)
-    author = db.Column(db.Integer,db.ForeignKey('users.id'),nullable=False)
+    author = db.Column(db.Integer,db.ForeignKey('users.id'))
     category = db.Column(db.String,default='general')
     comments = db.relationship('Comments',backref='pitches', lazy='dynamic')
     def save_pitch(self):
@@ -75,8 +75,8 @@ class Comments(db.Model):
     __tablename__='comments'
     id = db.Column(db.Integer,primary_key=True)
     content =db.Column(db.Text,nullable=False)
-    user_id = db.Column(db.Integer,db.ForeignKey('users.id'),nullable=False)
-    pitch_id = db.Column(db.Integer,db.ForeignKey('pitches.id'),nullable=False)
+    user_id = db.Column(db.Integer,db.ForeignKey('users.id'))
+    pitch_id = db.Column(db.Integer,db.ForeignKey('pitches.id'))
     def save_comment(self):
         db.session.add(self)
         db.session.commit()
