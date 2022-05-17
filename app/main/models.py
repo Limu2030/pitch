@@ -12,7 +12,7 @@ class User(UserMixin,db.Model):
     username = db.Column(db.String(20),unique=True,nullable=False)
     email = db.Column(db.String(120),unique=True,nullable=False)
     user_password = db.Column(db.String,unique=True,nullable=False)
-    pitches = db.relationship('Pitch',backref='pitch',lazy='dynamic')
+    pitches = db.relationship('Pitch',backref='pitches',lazy='dynamic')
     comments = db.relationship('Comments', backref='user', lazy='dynamic') 
 
     def save_user(self):
